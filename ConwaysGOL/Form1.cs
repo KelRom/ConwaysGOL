@@ -25,8 +25,8 @@ namespace ConwaysGOL
         #region Drawing Universe, Rules, Neighbor count and show method, Cells Alive, Generation Count, timer
         private void DrawUniverse(object sender, PaintEventArgs e)
         {
-            int cellWidth = DrawPanel.ClientSize.Width / cells.GetLength(0);
-            int cellHeight = DrawPanel.ClientSize.Height / cells.GetLength(1);
+            float cellWidth = (float)DrawPanel.ClientSize.Width / cells.GetLength(0);
+            float cellHeight = (float)DrawPanel.ClientSize.Height / cells.GetLength(1);
 
             Pen pen = new Pen(Color.Black);
             Brush brush = new SolidBrush(Color.Gray);
@@ -34,7 +34,7 @@ namespace ConwaysGOL
             {
                 for (int x = 0; x < cells.GetLength(0); x++)
                 {
-                    Rectangle cellRect = Rectangle.Empty;
+                    RectangleF cellRect = RectangleF.Empty;
                     cellRect.X = cellWidth * x;
                     cellRect.Y = cellHeight * y;
                     cellRect.Width = cellWidth;
@@ -47,7 +47,7 @@ namespace ConwaysGOL
 
                     if (showGrid)
                     { 
-                        e.Graphics.DrawRectangle(pen, cellRect);
+                        e.Graphics.DrawRectangle(pen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
                     }    
                     ShowNeighbors(e, x, y, cellRect);
                 }
@@ -146,7 +146,7 @@ namespace ConwaysGOL
             return neighbors;
         }
         
-        private void ShowNeighbors(PaintEventArgs e, int row, int col, Rectangle cellRect)
+        private void ShowNeighbors(PaintEventArgs e, int row, int col, RectangleF cellRect)
         {
 
             if (!showNeighbor)
@@ -186,10 +186,10 @@ namespace ConwaysGOL
         {
             if (e.Button == MouseButtons.Left)
             {
-                int cellWidth = DrawPanel.ClientSize.Width / cells.GetLength(0);
-                int cellHeight = DrawPanel.ClientSize.Height / cells.GetLength(1);
-                int row = e.X / cellWidth;
-                int col = e.Y / cellHeight;
+                float cellWidth = (float)DrawPanel.ClientSize.Width / cells.GetLength(0);
+                float cellHeight = (float)DrawPanel.ClientSize.Height / cells.GetLength(1);
+                int row = (int)(e.X / cellWidth);
+                int col = (int)(e.Y / cellHeight);
                 cells[row, col] = !cells[row, col];
                 DrawPanel.Invalidate();
             }
