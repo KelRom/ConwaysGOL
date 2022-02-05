@@ -63,6 +63,16 @@ namespace ConwaysGOL.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap NextButtonIMG {
+            get {
+                object obj = ResourceManager.GetObject("NextButtonIMG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PauseButton {
             get {
                 object obj = ResourceManager.GetObject("PauseButton", resourceCulture);

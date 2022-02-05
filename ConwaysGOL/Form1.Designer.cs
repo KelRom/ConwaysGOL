@@ -61,7 +61,6 @@ namespace ConwaysGOL
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.GenerationStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.cellsAliveStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -313,8 +312,7 @@ namespace ConwaysGOL
             this.toolStripSeparator2,
             this.PlayStripButton,
             this.PauseStripButton,
-            this.NextStripButton,
-            this.toolStripSeparator1});
+            this.NextStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(634, 25);
@@ -325,11 +323,6 @@ namespace ConwaysGOL
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // statusStrip1
             // 
@@ -410,7 +403,7 @@ namespace ConwaysGOL
             this.PauseStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.PauseStripButton.Enabled = false;
             this.PauseStripButton.Image = global::ConwaysGOL.Properties.Resources.PauseButton;
-            this.PauseStripButton.ImageTransparentColor = System.Drawing.SystemColors.ControlLight;
+            this.PauseStripButton.ImageTransparentColor = System.Drawing.SystemColors.ControlLightLight;
             this.PauseStripButton.Name = "PauseStripButton";
             this.PauseStripButton.Size = new System.Drawing.Size(23, 22);
             this.PauseStripButton.Text = "toolStripButton5";
@@ -420,8 +413,8 @@ namespace ConwaysGOL
             // NextStripButton
             // 
             this.NextStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.NextStripButton.Image = ((System.Drawing.Image)(resources.GetObject("NextStripButton.Image")));
-            this.NextStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NextStripButton.Image = global::ConwaysGOL.Properties.Resources.NextButtonIMG;
+            this.NextStripButton.ImageTransparentColor = System.Drawing.SystemColors.ControlLightLight;
             this.NextStripButton.Name = "NextStripButton";
             this.NextStripButton.Size = new System.Drawing.Size(23, 22);
             this.NextStripButton.Text = "toolStripButton6";
@@ -491,7 +484,6 @@ namespace ConwaysGOL
         private System.Windows.Forms.ToolStripButton PlayStripButton;
         private System.Windows.Forms.ToolStripButton PauseStripButton;
         private System.Windows.Forms.ToolStripButton NextStripButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem hUDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem neighborCountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
