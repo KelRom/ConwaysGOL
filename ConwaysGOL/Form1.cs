@@ -16,7 +16,7 @@ namespace ConwaysGOL
         int Generations = 0;
         bool showNeighbor = true;
         bool showGrid = true;
-        Color penColor = Color.Black;
+        Color PenColor = Color.Black;
         Color BrushColor = Color.Gray;
        
         public Form1()
@@ -30,7 +30,7 @@ namespace ConwaysGOL
             float cellWidth = (float)DrawPanel.ClientSize.Width / cells.GetLength(0);
             float cellHeight = (float)DrawPanel.ClientSize.Height / cells.GetLength(1);
 
-            Pen pen = new Pen(penColor);
+            Pen pen = new Pen(PenColor);
             Brush brush = new SolidBrush(BrushColor);
             for (int y = 0; y < cells.GetLength(1); y++)
             {
@@ -345,6 +345,17 @@ namespace ConwaysGOL
             }
         }
 
+        private void gridLinesColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog color = new ColorDialog();
+            color.Color = PenColor;
+
+            if(DialogResult.OK == color.ShowDialog())
+            {
+                PenColor = color.Color;
+                DrawPanel.Invalidate();
+            }
+        }
         #endregion
     }
 }

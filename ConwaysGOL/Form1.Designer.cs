@@ -75,9 +75,16 @@ namespace ConwaysGOL
             this.cellsAliveStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.DrawPanel = new ConwaysGOL.DrawPanel();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.colorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cellAndTimeOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gridToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -309,6 +316,7 @@ namespace ConwaysGOL
             this.gridLinesColorToolStripMenuItem.Name = "gridLinesColorToolStripMenuItem";
             this.gridLinesColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.gridLinesColorToolStripMenuItem.Text = "Grid Color";
+            this.gridLinesColorToolStripMenuItem.Click += new System.EventHandler(this.gridLinesColorToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
@@ -444,6 +452,7 @@ namespace ConwaysGOL
             // DrawPanel
             // 
             this.DrawPanel.BackColor = System.Drawing.Color.White;
+            this.DrawPanel.ContextMenuStrip = this.contextMenuStrip1;
             this.DrawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DrawPanel.Location = new System.Drawing.Point(0, 49);
             this.DrawPanel.Name = "DrawPanel";
@@ -451,6 +460,51 @@ namespace ConwaysGOL
             this.DrawPanel.TabIndex = 3;
             this.DrawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawUniverse);
             this.DrawPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ChangeStateOnPanelClick);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.colorToolStripMenuItem,
+            this.cellAndTimeOptionsToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(190, 48);
+            // 
+            // colorToolStripMenuItem
+            // 
+            this.colorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.backgroundToolStripMenuItem,
+            this.cellToolStripMenuItem,
+            this.gridToolStripMenuItem1});
+            this.colorToolStripMenuItem.Name = "colorToolStripMenuItem";
+            this.colorToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.colorToolStripMenuItem.Text = "Color";
+            // 
+            // cellAndTimeOptionsToolStripMenuItem
+            // 
+            this.cellAndTimeOptionsToolStripMenuItem.Name = "cellAndTimeOptionsToolStripMenuItem";
+            this.cellAndTimeOptionsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.cellAndTimeOptionsToolStripMenuItem.Text = "Cell and Time options";
+            // 
+            // backgroundToolStripMenuItem
+            // 
+            this.backgroundToolStripMenuItem.Name = "backgroundToolStripMenuItem";
+            this.backgroundToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.backgroundToolStripMenuItem.Text = "Background";
+            this.backgroundToolStripMenuItem.Click += new System.EventHandler(this.backColorToolStripMenuItem_Click);
+            // 
+            // cellToolStripMenuItem
+            // 
+            this.cellToolStripMenuItem.Name = "cellToolStripMenuItem";
+            this.cellToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cellToolStripMenuItem.Text = "Cell";
+            this.cellToolStripMenuItem.Click += new System.EventHandler(this.cellColorToolStripMenuItem_Click);
+            // 
+            // gridToolStripMenuItem1
+            // 
+            this.gridToolStripMenuItem1.Name = "gridToolStripMenuItem1";
+            this.gridToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.gridToolStripMenuItem1.Text = "Grid";
+            this.gridToolStripMenuItem1.Click += new System.EventHandler(this.gridLinesColorToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -470,6 +524,7 @@ namespace ConwaysGOL
             this.toolStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -521,6 +576,12 @@ namespace ConwaysGOL
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem colorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem backgroundToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cellToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem cellAndTimeOptionsToolStripMenuItem;
     }
 }
 
