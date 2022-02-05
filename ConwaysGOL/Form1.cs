@@ -16,6 +16,8 @@ namespace ConwaysGOL
         int Generations = 0;
         bool showNeighbor = true;
         bool showGrid = true;
+        Color penColor = Color.Black;
+        Color BrushColor = Color.Gray;
        
         public Form1()
         {
@@ -28,8 +30,8 @@ namespace ConwaysGOL
             float cellWidth = (float)DrawPanel.ClientSize.Width / cells.GetLength(0);
             float cellHeight = (float)DrawPanel.ClientSize.Height / cells.GetLength(1);
 
-            Pen pen = new Pen(Color.Black);
-            Brush brush = new SolidBrush(Color.Gray);
+            Pen pen = new Pen(penColor);
+            Brush brush = new SolidBrush(BrushColor);
             for (int y = 0; y < cells.GetLength(1); y++)
             {
                 for (int x = 0; x < cells.GetLength(0); x++)
@@ -298,18 +300,6 @@ namespace ConwaysGOL
             PlayStripButton.Enabled = true;
         }
 
-        private void backColorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ColorDialog color = new ColorDialog();
-            color.Color = DrawPanel.BackColor;
-            if (DialogResult.OK == color.ShowDialog())
-            {
-                DrawPanel.BackColor = color.Color;
-                DrawPanel.Invalidate();
-            }
-        }
-
-
         #endregion
 
         #region Randomize Menu items
@@ -327,10 +317,33 @@ namespace ConwaysGOL
             DrawPanel.Invalidate();
         }
 
+        
+
         #endregion
 
         #region Settings Menu items
-       
+        private void backColorToolStripMenuItem_Click(object sender, EventArgs e)
+         {
+            ColorDialog color = new ColorDialog();
+            color.Color = DrawPanel.BackColor;
+            if (DialogResult.OK == color.ShowDialog())
+            {
+                DrawPanel.BackColor = color.Color;
+                DrawPanel.Invalidate();
+            }
+         }
+
+        private void cellColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog color = new ColorDialog();
+            color.Color = BrushColor;
+
+            if(DialogResult.OK == color.ShowDialog())
+            {
+                BrushColor = color.Color;
+                DrawPanel.Invalidate();
+            }
+        }
 
         #endregion
     }
