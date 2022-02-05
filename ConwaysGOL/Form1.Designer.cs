@@ -32,6 +32,10 @@ namespace ConwaysGOL
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hUDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.neighborCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,9 +61,6 @@ namespace ConwaysGOL
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.PlayStripButton = new System.Windows.Forms.ToolStripButton();
-            this.PauseStripButton = new System.Windows.Forms.ToolStripButton();
-            this.NextStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.GenerationStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -69,15 +70,12 @@ namespace ConwaysGOL
             this.NewStripButton = new System.Windows.Forms.ToolStripButton();
             this.OpenStripButton = new System.Windows.Forms.ToolStripButton();
             this.SaveStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.fileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.PlayStripButton = new System.Windows.Forms.ToolStripButton();
+            this.PauseStripButton = new System.Windows.Forms.ToolStripButton();
+            this.NextStripButton = new System.Windows.Forms.ToolStripButton();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -97,6 +95,36 @@ namespace ConwaysGOL
             this.menuStrip1.Size = new System.Drawing.Size(634, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem1
+            // 
+            this.fileToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
+            this.openToolStripMenuItem,
+            this.toolStripSeparator9,
+            this.saveToolStripMenuItem,
+            this.toolStripSeparator10,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem1.Name = "fileToolStripMenuItem1";
+            this.fileToolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem1.Text = "&File";
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(143, 6);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(143, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -286,9 +314,7 @@ namespace ConwaysGOL
             this.PlayStripButton,
             this.PauseStripButton,
             this.NextStripButton,
-            this.toolStripSeparator1,
-            this.toolStripSeparator,
-            this.toolStripSeparator8});
+            this.toolStripSeparator1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(634, 25);
@@ -299,40 +325,6 @@ namespace ConwaysGOL
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // PlayStripButton
-            // 
-            this.PlayStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.PlayStripButton.Image = ((System.Drawing.Image)(resources.GetObject("PlayStripButton.Image")));
-            this.PlayStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.PlayStripButton.Name = "PlayStripButton";
-            this.PlayStripButton.Size = new System.Drawing.Size(23, 22);
-            this.PlayStripButton.Text = "toolStripButton4";
-            this.PlayStripButton.ToolTipText = "Play";
-            this.PlayStripButton.Click += new System.EventHandler(this.PlayButton_Click);
-            // 
-            // PauseStripButton
-            // 
-            this.PauseStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.PauseStripButton.Enabled = false;
-            this.PauseStripButton.Image = ((System.Drawing.Image)(resources.GetObject("PauseStripButton.Image")));
-            this.PauseStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.PauseStripButton.Name = "PauseStripButton";
-            this.PauseStripButton.Size = new System.Drawing.Size(23, 22);
-            this.PauseStripButton.Text = "toolStripButton5";
-            this.PauseStripButton.ToolTipText = "Pause";
-            this.PauseStripButton.Click += new System.EventHandler(this.PauseButton_Click);
-            // 
-            // NextStripButton
-            // 
-            this.NextStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.NextStripButton.Image = ((System.Drawing.Image)(resources.GetObject("NextStripButton.Image")));
-            this.NextStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.NextStripButton.Name = "NextStripButton";
-            this.NextStripButton.Size = new System.Drawing.Size(23, 22);
-            this.NextStripButton.Text = "toolStripButton6";
-            this.NextStripButton.ToolTipText = "Next";
-            this.NextStripButton.Click += new System.EventHandler(this.NextStripButton_Click);
             // 
             // toolStripSeparator1
             // 
@@ -402,28 +394,39 @@ namespace ConwaysGOL
             this.SaveStripButton.Size = new System.Drawing.Size(23, 22);
             this.SaveStripButton.Text = "&Save";
             // 
-            // toolStripSeparator
+            // PlayStripButton
             // 
-            this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
+            this.PlayStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PlayStripButton.Image = global::ConwaysGOL.Properties.Resources.StartButtonIMG;
+            this.PlayStripButton.ImageTransparentColor = System.Drawing.SystemColors.ControlLightLight;
+            this.PlayStripButton.Name = "PlayStripButton";
+            this.PlayStripButton.Size = new System.Drawing.Size(23, 22);
+            this.PlayStripButton.Text = "toolStripButton4";
+            this.PlayStripButton.ToolTipText = "Play";
+            this.PlayStripButton.Click += new System.EventHandler(this.PlayButton_Click);
             // 
-            // toolStripSeparator8
+            // PauseStripButton
             // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+            this.PauseStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PauseStripButton.Enabled = false;
+            this.PauseStripButton.Image = ((System.Drawing.Image)(resources.GetObject("PauseStripButton.Image")));
+            this.PauseStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.PauseStripButton.Name = "PauseStripButton";
+            this.PauseStripButton.Size = new System.Drawing.Size(23, 22);
+            this.PauseStripButton.Text = "toolStripButton5";
+            this.PauseStripButton.ToolTipText = "Pause";
+            this.PauseStripButton.Click += new System.EventHandler(this.PauseButton_Click);
             // 
-            // fileToolStripMenuItem1
+            // NextStripButton
             // 
-            this.fileToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.openToolStripMenuItem,
-            this.toolStripSeparator9,
-            this.saveToolStripMenuItem,
-            this.toolStripSeparator10,
-            this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem1.Name = "fileToolStripMenuItem1";
-            this.fileToolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem1.Text = "&File";
+            this.NextStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.NextStripButton.Image = ((System.Drawing.Image)(resources.GetObject("NextStripButton.Image")));
+            this.NextStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NextStripButton.Name = "NextStripButton";
+            this.NextStripButton.Size = new System.Drawing.Size(23, 22);
+            this.NextStripButton.Text = "toolStripButton6";
+            this.NextStripButton.ToolTipText = "Next";
+            this.NextStripButton.Click += new System.EventHandler(this.NextStripButton_Click);
             // 
             // newToolStripMenuItem
             // 
@@ -431,7 +434,7 @@ namespace ConwaysGOL
             this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.NewStripButton_Click);
             // 
@@ -441,13 +444,8 @@ namespace ConwaysGOL
             this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.openToolStripMenuItem.Text = "&Open";
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(177, 6);
             // 
             // saveToolStripMenuItem
             // 
@@ -455,20 +453,8 @@ namespace ConwaysGOL
             this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveToolStripMenuItem.Text = "&Save";
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(177, 6);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -533,8 +519,6 @@ namespace ConwaysGOL
         private System.Windows.Forms.ToolStripButton NewStripButton;
         private System.Windows.Forms.ToolStripButton OpenStripButton;
         private System.Windows.Forms.ToolStripButton SaveStripButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
