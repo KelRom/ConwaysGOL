@@ -33,7 +33,10 @@ namespace ConwaysGOL
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,21 +63,18 @@ namespace ConwaysGOL
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.NewStripButton = new System.Windows.Forms.ToolStripButton();
+            this.OpenStripButton = new System.Windows.Forms.ToolStripButton();
+            this.SaveStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.PlayStripButton = new System.Windows.Forms.ToolStripButton();
+            this.PauseStripButton = new System.Windows.Forms.ToolStripButton();
+            this.NextStripButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.GenerationStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.cellsAliveStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.DrawPanel = new ConwaysGOL.DrawPanel();
-            this.NewStripButton = new System.Windows.Forms.ToolStripButton();
-            this.OpenStripButton = new System.Windows.Forms.ToolStripButton();
-            this.SaveStripButton = new System.Windows.Forms.ToolStripButton();
-            this.PlayStripButton = new System.Windows.Forms.ToolStripButton();
-            this.PauseStripButton = new System.Windows.Forms.ToolStripButton();
-            this.NextStripButton = new System.Windows.Forms.ToolStripButton();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -108,10 +108,38 @@ namespace ConwaysGOL
             this.fileToolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem1.Text = "&File";
             // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripMenuItem.Image")));
+            this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.newToolStripMenuItem.Text = "&New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.NewStripButton_Click);
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripMenuItem.Image")));
+            this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Text = "&Open";
+            // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(143, 6);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem.Image")));
+            this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Text = "&Save";
             // 
             // toolStripSeparator10
             // 
@@ -265,41 +293,42 @@ namespace ConwaysGOL
             // backColorToolStripMenuItem
             // 
             this.backColorToolStripMenuItem.Name = "backColorToolStripMenuItem";
-            this.backColorToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.backColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.backColorToolStripMenuItem.Text = "Back Color";
+            this.backColorToolStripMenuItem.Click += new System.EventHandler(this.backColorToolStripMenuItem_Click);
             // 
             // cellColorToolStripMenuItem
             // 
             this.cellColorToolStripMenuItem.Name = "cellColorToolStripMenuItem";
-            this.cellColorToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.cellColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cellColorToolStripMenuItem.Text = "Cell Color";
             // 
             // gridLinesColorToolStripMenuItem
             // 
             this.gridLinesColorToolStripMenuItem.Name = "gridLinesColorToolStripMenuItem";
-            this.gridLinesColorToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.gridLinesColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.gridLinesColorToolStripMenuItem.Text = "Grid Color";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(128, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(128, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
             // 
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.resetToolStripMenuItem.Text = "Reset";
             // 
             // toolStrip1
@@ -318,46 +347,6 @@ namespace ConwaysGOL
             this.toolStrip1.Size = new System.Drawing.Size(634, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.GenerationStripStatusLabel,
-            this.cellsAliveStripStatusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 589);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(634, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // GenerationStripStatusLabel
-            // 
-            this.GenerationStripStatusLabel.Name = "GenerationStripStatusLabel";
-            this.GenerationStripStatusLabel.Size = new System.Drawing.Size(0, 17);
-            // 
-            // cellsAliveStripStatusLabel
-            // 
-            this.cellsAliveStripStatusLabel.Name = "cellsAliveStripStatusLabel";
-            this.cellsAliveStripStatusLabel.Size = new System.Drawing.Size(0, 17);
-            // 
-            // timer
-            // 
-            this.timer.Tick += new System.EventHandler(this.Timer_Tick);
-            // 
-            // DrawPanel
-            // 
-            this.DrawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DrawPanel.Location = new System.Drawing.Point(0, 49);
-            this.DrawPanel.Name = "DrawPanel";
-            this.DrawPanel.Size = new System.Drawing.Size(634, 540);
-            this.DrawPanel.TabIndex = 3;
-            this.DrawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawUniverse);
-            this.DrawPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ChangeStateOnPanelClick);
             // 
             // NewStripButton
             // 
@@ -386,6 +375,11 @@ namespace ConwaysGOL
             this.SaveStripButton.Name = "SaveStripButton";
             this.SaveStripButton.Size = new System.Drawing.Size(23, 22);
             this.SaveStripButton.Text = "&Save";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // PlayStripButton
             // 
@@ -421,33 +415,41 @@ namespace ConwaysGOL
             this.NextStripButton.ToolTipText = "Next";
             this.NextStripButton.Click += new System.EventHandler(this.NextStripButton_Click);
             // 
-            // newToolStripMenuItem
+            // statusStrip1
             // 
-            this.newToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripMenuItem.Image")));
-            this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.newToolStripMenuItem.Text = "&New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.NewStripButton_Click);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.GenerationStripStatusLabel,
+            this.cellsAliveStripStatusLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 589);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(634, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
             // 
-            // openToolStripMenuItem
+            // GenerationStripStatusLabel
             // 
-            this.openToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripMenuItem.Image")));
-            this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.openToolStripMenuItem.Text = "&Open";
+            this.GenerationStripStatusLabel.Name = "GenerationStripStatusLabel";
+            this.GenerationStripStatusLabel.Size = new System.Drawing.Size(0, 17);
             // 
-            // saveToolStripMenuItem
+            // cellsAliveStripStatusLabel
             // 
-            this.saveToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem.Image")));
-            this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.saveToolStripMenuItem.Text = "&Save";
+            this.cellsAliveStripStatusLabel.Name = "cellsAliveStripStatusLabel";
+            this.cellsAliveStripStatusLabel.Size = new System.Drawing.Size(0, 17);
+            // 
+            // timer
+            // 
+            this.timer.Tick += new System.EventHandler(this.Timer_Tick);
+            // 
+            // DrawPanel
+            // 
+            this.DrawPanel.BackColor = System.Drawing.Color.White;
+            this.DrawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DrawPanel.Location = new System.Drawing.Point(0, 49);
+            this.DrawPanel.Name = "DrawPanel";
+            this.DrawPanel.Size = new System.Drawing.Size(634, 540);
+            this.DrawPanel.TabIndex = 3;
+            this.DrawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawUniverse);
+            this.DrawPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ChangeStateOnPanelClick);
             // 
             // Form1
             // 

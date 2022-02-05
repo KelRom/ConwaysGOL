@@ -298,7 +298,18 @@ namespace ConwaysGOL
             PlayStripButton.Enabled = true;
         }
 
-       
+        private void backColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog color = new ColorDialog();
+            color.Color = DrawPanel.BackColor;
+            if (DialogResult.OK == color.ShowDialog())
+            {
+                DrawPanel.BackColor = color.Color;
+                DrawPanel.Invalidate();
+            }
+        }
+
+
         #endregion
 
         #region Randomize Menu items
