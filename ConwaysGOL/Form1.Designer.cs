@@ -409,8 +409,8 @@ namespace ConwaysGOL
             // 
             this.PauseStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.PauseStripButton.Enabled = false;
-            this.PauseStripButton.Image = ((System.Drawing.Image)(resources.GetObject("PauseStripButton.Image")));
-            this.PauseStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.PauseStripButton.Image = global::ConwaysGOL.Properties.Resources.PauseButton;
+            this.PauseStripButton.ImageTransparentColor = System.Drawing.SystemColors.ControlLight;
             this.PauseStripButton.Name = "PauseStripButton";
             this.PauseStripButton.Size = new System.Drawing.Size(23, 22);
             this.PauseStripButton.Text = "toolStripButton5";
