@@ -315,7 +315,7 @@ namespace ConwaysGOL
         private void RandomizeByTime(object sender, EventArgs e)
         {
             cells = new bool[cellsX, cellsY];
-            Random rand = new Random(DateTime.Now.Second);
+            Random rand = new Random();
             for (int y = 0; y < cellsY; y++)
             {
                 for (int x = 0; x < cellsX; x++)
