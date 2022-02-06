@@ -30,6 +30,7 @@ namespace ConwaysGOL
             neighborCountToolStripMenuItem.Checked = showNeighbor;
             gridToolStripMenuItem.Checked = showGrid;
             isToroidal = Properties.Settings.Default.IsToroidal;
+            timer.Interval = Properties.Settings.Default.Interval;
             
             if (isToroidal)
             {
@@ -299,7 +300,6 @@ namespace ConwaysGOL
             PauseStripButton.Enabled = true;
             NextStripButton.Enabled = false;
             PlayStripButton.Enabled = false;
-            timer.Interval = 100;
             timer.Enabled = true; 
         }
         
@@ -349,8 +349,6 @@ namespace ConwaysGOL
             }
          }
 
-        
-
         private void cellColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog color = new ColorDialog();
@@ -374,7 +372,37 @@ namespace ConwaysGOL
                 DrawPanel.Invalidate();
             }
         }
-        
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OptionDialog options = new OptionDialog();
+            options.TimeInterval = timer.Interval;
+            options.CellWidth = cellsX;
+            options.CellHeight = cellsY;
+            if (DialogResult.OK == options.ShowDialog())
+            {
+                if(options.TimeInterval == timer.Interval)
+                {
+                    cellsX = options.CellWidth;
+                    cellsY = options.CellHeight;
+                    cells = new bool[cellsX, cellsY];
+                }
+                else if(options.TimeInterval != timer.Interval && options.CellWidth == cellsX && options.CellHeight == cellsY)
+                {
+                    timer.Interval = options.TimeInterval;
+                }
+                else
+                {
+                    timer.Interval = options.TimeInterval;
+                    cellsX = options.CellWidth;
+                    cellsY = options.CellHeight;
+                    cells = new bool[cellsX, cellsY];
+                }
+                
+                DrawPanel.Invalidate();
+            }
+        }
+
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Reset();
@@ -388,6 +416,9 @@ namespace ConwaysGOL
             neighborCountToolStripMenuItem.Checked = showNeighbor;
             gridToolStripMenuItem.Checked = showGrid;
             isToroidal = Properties.Settings.Default.IsToroidal;
+            timer.Interval = Properties.Settings.Default.Interval;
+            cells = new bool[cellsX, cellsY];
+            DrawPanel.Invalidate();
         }
         
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -404,6 +435,9 @@ namespace ConwaysGOL
             neighborCountToolStripMenuItem.Checked = showNeighbor;
             gridToolStripMenuItem.Checked = showGrid;
             isToroidal = Properties.Settings.Default.IsToroidal;
+            timer.Interval = Properties.Settings.Default.Interval;
+            cells = new bool[cellsX, cellsY];
+            DrawPanel.Invalidate();
         }
         #endregion
 
