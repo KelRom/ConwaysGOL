@@ -106,5 +106,17 @@ namespace ConwaysGOL.Properties {
                 this["ShowGrid"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsToroidal {
+            get {
+                return ((bool)(this["IsToroidal"]));
+            }
+            set {
+                this["IsToroidal"] = value;
+            }
+        }
     }
 }

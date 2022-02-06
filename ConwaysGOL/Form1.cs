@@ -14,9 +14,9 @@ namespace ConwaysGOL
         private bool[,] cells;
         private int cellsX, cellsY;
         private int Generations = 0;
-        private bool showNeighbor, showGrid;
+        private bool showNeighbor, showGrid, isToroidal;
         private Color PenColor, BrushColor;
-       
+
         public Form1()
         {
             InitializeComponent();
@@ -29,8 +29,18 @@ namespace ConwaysGOL
             cellsY = Properties.Settings.Default.CellY;
             neighborCountToolStripMenuItem.Checked = showNeighbor;
             gridToolStripMenuItem.Checked = showGrid;
+            isToroidal = Properties.Settings.Default.IsToroidal;
+            
+            if (isToroidal)
+            {
+                toroidalToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                finiteToolStripMenuItem.Checked = true;
+            }
+            
             cells = new bool[cellsX, cellsY];
-
         }
 
         #region Drawing Universe, Rules, Neighbor count and show method, Cells Alive, Generation Count, timer
@@ -159,7 +169,6 @@ namespace ConwaysGOL
         
         private void ShowNeighbors(PaintEventArgs e, int row, int col, RectangleF cellRect)
         {
-
             if (!showNeighbor)
             {
                 return;
@@ -271,15 +280,16 @@ namespace ConwaysGOL
 
         private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            isToroidal = true;
             finiteToolStripMenuItem.Checked = false;
             DrawPanel.Invalidate();
         }
 
         private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            isToroidal = false;
             toroidalToolStripMenuItem.Checked = false;
             DrawPanel.Invalidate();
-
         }
         #endregion
 
@@ -376,6 +386,7 @@ namespace ConwaysGOL
             Properties.Settings.Default.CellColor = BrushColor;
             Properties.Settings.Default.ShowGrid = showGrid;
             Properties.Settings.Default.ShowNeighbor = showNeighbor;
+            Properties.Settings.Default.IsToroidal = isToroidal;
             Properties.Settings.Default.CellX = cellsX;
             Properties.Settings.Default.CellY = cellsY;
             Properties.Settings.Default.Save();

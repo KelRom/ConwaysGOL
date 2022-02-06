@@ -182,9 +182,7 @@ namespace ConwaysGOL
             // 
             // neighborCountToolStripMenuItem
             // 
-            this.neighborCountToolStripMenuItem.Checked = true;
             this.neighborCountToolStripMenuItem.CheckOnClick = true;
-            this.neighborCountToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.neighborCountToolStripMenuItem.Name = "neighborCountToolStripMenuItem";
             this.neighborCountToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.neighborCountToolStripMenuItem.Text = " Neighbor Count";
@@ -192,9 +190,7 @@ namespace ConwaysGOL
             // 
             // gridToolStripMenuItem
             // 
-            this.gridToolStripMenuItem.Checked = true;
             this.gridToolStripMenuItem.CheckOnClick = true;
-            this.gridToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
             this.gridToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.gridToolStripMenuItem.Text = "Grid";
@@ -207,9 +203,7 @@ namespace ConwaysGOL
             // 
             // toroidalToolStripMenuItem
             // 
-            this.toroidalToolStripMenuItem.Checked = true;
             this.toroidalToolStripMenuItem.CheckOnClick = true;
-            this.toroidalToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toroidalToolStripMenuItem.Name = "toroidalToolStripMenuItem";
             this.toroidalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.toroidalToolStripMenuItem.Text = "Toroidal";
@@ -483,21 +477,21 @@ namespace ConwaysGOL
             // backgroundToolStripMenuItem
             // 
             this.backgroundToolStripMenuItem.Name = "backgroundToolStripMenuItem";
-            this.backgroundToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.backgroundToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.backgroundToolStripMenuItem.Text = "Background Color";
             this.backgroundToolStripMenuItem.Click += new System.EventHandler(this.backColorToolStripMenuItem_Click);
             // 
             // cellToolStripMenuItem
             // 
             this.cellToolStripMenuItem.Name = "cellToolStripMenuItem";
-            this.cellToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cellToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.cellToolStripMenuItem.Text = "Cell Color";
             this.cellToolStripMenuItem.Click += new System.EventHandler(this.cellColorToolStripMenuItem_Click);
             // 
             // gridToolStripMenuItem1
             // 
             this.gridToolStripMenuItem1.Name = "gridToolStripMenuItem1";
-            this.gridToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.gridToolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
             this.gridToolStripMenuItem1.Text = "Grid Color";
             this.gridToolStripMenuItem1.Click += new System.EventHandler(this.gridLinesColorToolStripMenuItem_Click);
             // 
