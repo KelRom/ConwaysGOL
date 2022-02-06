@@ -11,30 +11,39 @@ namespace ConwaysGOL
 
     public partial class Form1 : Form
     {
-        private bool[,] cells = new bool[30, 30];
-        private int cellX, cellsY;
-        int Generations = 0;
-        bool showNeighbor = true;
-        bool showGrid = true;
-        Color PenColor = Color.Black;
-        Color BrushColor = Color.Gray;
+        private bool[,] cells;
+        private int cellsX, cellsY;
+        private int Generations = 0;
+        private bool showNeighbor, showGrid;
+        private Color PenColor, BrushColor;
        
         public Form1()
         {
-            InitializeComponent();  
+            InitializeComponent();
+            DrawPanel.BackColor = Properties.Settings.Default.BackColor;
+            PenColor = Properties.Settings.Default.GridColor;
+            BrushColor = Properties.Settings.Default.CellColor;
+            showGrid = Properties.Settings.Default.ShowGrid;
+            showNeighbor = Properties.Settings.Default.ShowNeighbor;
+            cellsX = Properties.Settings.Default.CellX;
+            cellsY = Properties.Settings.Default.CellY;
+            neighborCountToolStripMenuItem.Checked = showNeighbor;
+            gridToolStripMenuItem.Checked = showGrid;
+            cells = new bool[cellsX, cellsY];
+
         }
 
         #region Drawing Universe, Rules, Neighbor count and show method, Cells Alive, Generation Count, timer
         private void DrawUniverse(object sender, PaintEventArgs e)
         {
-            float cellWidth = (float)DrawPanel.ClientSize.Width / cells.GetLength(0);
-            float cellHeight = (float)DrawPanel.ClientSize.Height / cells.GetLength(1);
+            float cellWidth = (float)DrawPanel.ClientSize.Width / cellsX;
+            float cellHeight = (float)DrawPanel.ClientSize.Height / cellsY;
 
             Pen pen = new Pen(PenColor);
             Brush brush = new SolidBrush(BrushColor);
-            for (int y = 0; y < cells.GetLength(1); y++)
+            for (int y = 0; y < cellsY; y++)
             {
-                for (int x = 0; x < cells.GetLength(0); x++)
+                for (int x = 0; x < cellsX; x++)
                 {
                     RectangleF cellRect = RectangleF.Empty;
                     cellRect.X = cellWidth * x;
@@ -63,13 +72,13 @@ namespace ConwaysGOL
 
         private void RuleForCell()
         {
-            bool[,] scratchPad = new bool[cells.GetLength(0), cells.GetLength(1)];
+            bool[,] scratchPad = new bool[cellsX, cellsY];
            
             int neighbors = 0;
             
-            for (int y = 0; y < cells.GetLength(1); y++)
+            for (int y = 0; y < cellsY; y++)
             {
-                for (int x = 0; x < cells.GetLength(0); x++)
+                for (int x = 0; x < cellsX; x++)
                 {
                     if (finiteToolStripMenuItem.Checked)
                     {
@@ -116,8 +125,8 @@ namespace ConwaysGOL
                     int neighborsY = col + yOffset;
 
                     if (xOffset == 0 && yOffset == 0) continue;
-                    else if (neighborsX < 0 || neighborsX >= cells.GetLength(0)) continue;
-                    else if (neighborsY < 0 || neighborsY >= cells.GetLength(0)) continue;
+                    else if (neighborsX < 0 || neighborsX >= cellsX) continue;
+                    else if (neighborsY < 0 || neighborsY >= cellsY) continue;
                     else if (cells[neighborsX, neighborsY]) neighbors++;
                 }
             }
@@ -135,12 +144,12 @@ namespace ConwaysGOL
                     int neighborsY = col + yOffset;
 
                     if (xOffset == 0 && yOffset == 0) continue;
-                    if(neighborsX < 0) neighborsX = cells.GetLength(0) - 1;
-                    if(neighborsX >= cells.GetLength(0)) neighborsX = 0;
+                    if(neighborsX < 0) neighborsX = cellsX - 1;
+                    if(neighborsX >= cellsX) neighborsX = 0;
                     
-                    if(neighborsY < 0) neighborsY = cells.GetLength(1) -1 ;
+                    if(neighborsY < 0) neighborsY = cellsY -1 ;
                     
-                    if(neighborsY >= cells.GetLength(1)) neighborsY = 0;
+                    if(neighborsY >= cellsY) neighborsY = 0;
                    
                     if (cells[neighborsX, neighborsY]) neighbors++;
                 }
@@ -188,8 +197,8 @@ namespace ConwaysGOL
         {
             if (e.Button == MouseButtons.Left)
             {
-                float cellWidth = (float)DrawPanel.ClientSize.Width / cells.GetLength(0);
-                float cellHeight = (float)DrawPanel.ClientSize.Height / cells.GetLength(1);
+                float cellWidth = (float)DrawPanel.ClientSize.Width / cellsX;
+                float cellHeight = (float)DrawPanel.ClientSize.Height / cellsY;
                 int row = (int)(e.X / cellWidth);
                 int col = (int)(e.Y / cellHeight);
                 cells[row, col] = !cells[row, col];
@@ -213,9 +222,9 @@ namespace ConwaysGOL
         private void cellsAlive()
         {
             int cellsAlive = 0;
-            for (int y = 0; y < cells.GetLength(1); y++)
+            for (int y = 0; y < cellsY; y++)
             {
-                for (int x = 0; x < cells.GetLength(0); x++)
+                for (int x = 0; x < cellsX; x++)
                 {
                     if (cells[x, y]) cellsAlive++;
                 }
@@ -234,7 +243,7 @@ namespace ConwaysGOL
         #region New, Exit for both file menu and tool strip
         private void NewStripButton_Click(object sender, System.EventArgs e)
         {
-            cells = new bool[30, 30];
+            cells = new bool[cellsX, cellsY];
             Generations = 0;
             DrawPanel.Invalidate();
         }
@@ -280,7 +289,7 @@ namespace ConwaysGOL
             PauseStripButton.Enabled = true;
             NextStripButton.Enabled = false;
             PlayStripButton.Enabled = false;
-            timer.Interval = 150;
+            timer.Interval = 100;
             timer.Enabled = true; 
         }
         
@@ -305,19 +314,17 @@ namespace ConwaysGOL
         #region Randomize Menu items
         private void RandomizeByTime(object sender, EventArgs e)
         {
-            cells = new bool[30, 30];
+            cells = new bool[cellsX, cellsY];
             Random rand = new Random(DateTime.Now.Second);
-            for (int y = 0; y < cells.GetLength(1); y++)
+            for (int y = 0; y < cellsY; y++)
             {
-                for (int x = 0; x < cells.GetLength(0); x++)
+                for (int x = 0; x < cellsX; x++)
                 {
                     if (rand.Next(0, 2) == 1) cells[x, y] = !cells[x, y];
                 }
             }
             DrawPanel.Invalidate();
         }
-
-        
 
         #endregion
 
@@ -329,9 +336,13 @@ namespace ConwaysGOL
             if (DialogResult.OK == color.ShowDialog())
             {
                 DrawPanel.BackColor = color.Color;
-                DrawPanel.Invalidate();
             }
          }
+
+        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
 
         private void cellColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -357,5 +368,17 @@ namespace ConwaysGOL
             }
         }
         #endregion
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Properties.Settings.Default.BackColor = DrawPanel.BackColor;
+            Properties.Settings.Default.GridColor = PenColor;
+            Properties.Settings.Default.CellColor = BrushColor;
+            Properties.Settings.Default.ShowGrid = showGrid;
+            Properties.Settings.Default.ShowNeighbor = showNeighbor;
+            Properties.Settings.Default.CellX = cellsX;
+            Properties.Settings.Default.CellY = cellsY;
+            Properties.Settings.Default.Save();
+        }
     }
 }
