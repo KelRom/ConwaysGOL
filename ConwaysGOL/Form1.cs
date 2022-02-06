@@ -349,10 +349,7 @@ namespace ConwaysGOL
             }
          }
 
-        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
+        
 
         private void cellColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -376,6 +373,37 @@ namespace ConwaysGOL
                 PenColor = color.Color;
                 DrawPanel.Invalidate();
             }
+        }
+        
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reset();
+            DrawPanel.BackColor = Properties.Settings.Default.BackColor;
+            PenColor = Properties.Settings.Default.GridColor;
+            BrushColor = Properties.Settings.Default.CellColor;
+            showGrid = Properties.Settings.Default.ShowGrid;
+            showNeighbor = Properties.Settings.Default.ShowNeighbor;
+            cellsX = Properties.Settings.Default.CellX;
+            cellsY = Properties.Settings.Default.CellY;
+            neighborCountToolStripMenuItem.Checked = showNeighbor;
+            gridToolStripMenuItem.Checked = showGrid;
+            isToroidal = Properties.Settings.Default.IsToroidal;
+        }
+        
+        private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reload();
+
+            DrawPanel.BackColor = Properties.Settings.Default.BackColor;
+            PenColor = Properties.Settings.Default.GridColor;
+            BrushColor = Properties.Settings.Default.CellColor;
+            showGrid = Properties.Settings.Default.ShowGrid;
+            showNeighbor = Properties.Settings.Default.ShowNeighbor;
+            cellsX = Properties.Settings.Default.CellX;
+            cellsY = Properties.Settings.Default.CellY;
+            neighborCountToolStripMenuItem.Checked = showNeighbor;
+            gridToolStripMenuItem.Checked = showGrid;
+            isToroidal = Properties.Settings.Default.IsToroidal;
         }
         #endregion
 
