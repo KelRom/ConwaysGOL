@@ -130,5 +130,17 @@ namespace ConwaysGOL.Properties {
                 this["Interval"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2000")]
+        public int Seed {
+            get {
+                return ((int)(this["Seed"]));
+            }
+            set {
+                this["Seed"] = value;
+            }
+        }
     }
 }

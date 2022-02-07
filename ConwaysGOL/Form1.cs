@@ -14,6 +14,7 @@ namespace ConwaysGOL
         private bool[,] cells;
         private int cellsX, cellsY;
         private int Generations = 0;
+        private int Seed;
         private bool showNeighbor, showGrid, isToroidal;
         private Color PenColor, BrushColor;
 
@@ -40,7 +41,8 @@ namespace ConwaysGOL
             {
                 finiteToolStripMenuItem.Checked = true;
             }
-            
+
+            Seed = Properties.Settings.Default.Seed;
             cells = new bool[cellsX, cellsY];
         }
 
@@ -322,6 +324,27 @@ namespace ConwaysGOL
         #endregion
 
         #region Randomize Menu items
+        private void fromSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cells = new bool[cellsX, cellsY];
+            Random rand;
+            RandomBySeed dialog = new RandomBySeed();
+            dialog.Seed = Seed;
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                rand = new Random(dialog.Seed);
+                Seed = dialog.Seed;
+                for (int y = 0; y < cellsY; y++)
+                {
+                    for (int x = 0; x < cellsX; x++)
+                    {
+                        if(rand.Next(0, 2) == 1) cells[x, y] = true;
+                    }
+                }
+            }
+            DrawPanel.Invalidate();
+        }
+
         private void RandomizeByTime(object sender, EventArgs e)
         {
             cells = new bool[cellsX, cellsY];
@@ -330,7 +353,7 @@ namespace ConwaysGOL
             {
                 for (int x = 0; x < cellsX; x++)
                 {
-                    if (rand.Next(0, 2) == 1) cells[x, y] = !cells[x, y];
+                    if (rand.Next(0, 2) == 1) cells[x, y] = true;
                 }
             }
             DrawPanel.Invalidate();
@@ -417,6 +440,7 @@ namespace ConwaysGOL
             gridToolStripMenuItem.Checked = showGrid;
             isToroidal = Properties.Settings.Default.IsToroidal;
             timer.Interval = Properties.Settings.Default.Interval;
+            Seed = Properties.Settings.Default.Seed;
             cells = new bool[cellsX, cellsY];
             DrawPanel.Invalidate();
         }
@@ -430,13 +454,14 @@ namespace ConwaysGOL
             BrushColor = Properties.Settings.Default.CellColor;
             showGrid = Properties.Settings.Default.ShowGrid;
             showNeighbor = Properties.Settings.Default.ShowNeighbor;
+            isToroidal = Properties.Settings.Default.IsToroidal;
             cellsX = Properties.Settings.Default.CellX;
             cellsY = Properties.Settings.Default.CellY;
             neighborCountToolStripMenuItem.Checked = showNeighbor;
             gridToolStripMenuItem.Checked = showGrid;
-            isToroidal = Properties.Settings.Default.IsToroidal;
             timer.Interval = Properties.Settings.Default.Interval;
             cells = new bool[cellsX, cellsY];
+            Seed = Properties.Settings.Default.Seed;
             DrawPanel.Invalidate();
         }
         #endregion
@@ -451,6 +476,8 @@ namespace ConwaysGOL
             Properties.Settings.Default.IsToroidal = isToroidal;
             Properties.Settings.Default.CellX = cellsX;
             Properties.Settings.Default.CellY = cellsY;
+            Properties.Settings.Default.Interval = timer.Interval;
+            Properties.Settings.Default.Seed = Seed;
             Properties.Settings.Default.Save();
         }
     }
