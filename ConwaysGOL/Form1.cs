@@ -21,18 +21,8 @@ namespace ConwaysGOL
         public Form1()
         {
             InitializeComponent();
-            DrawPanel.BackColor = Properties.Settings.Default.BackColor;
-            PenColor = Properties.Settings.Default.GridColor;
-            BrushColor = Properties.Settings.Default.CellColor;
-            showGrid = Properties.Settings.Default.ShowGrid;
-            showNeighbor = Properties.Settings.Default.ShowNeighbor;
-            cellsX = Properties.Settings.Default.CellX;
-            cellsY = Properties.Settings.Default.CellY;
-            neighborCountToolStripMenuItem.Checked = showNeighbor;
-            gridToolStripMenuItem.Checked = showGrid;
-            isToroidal = Properties.Settings.Default.IsToroidal;
-            timer.Interval = Properties.Settings.Default.Interval;
-            
+            LoadOrUpdateProperties();
+
             if (isToroidal)
             {
                 toroidalToolStripMenuItem.Checked = true;
@@ -42,8 +32,6 @@ namespace ConwaysGOL
                 finiteToolStripMenuItem.Checked = true;
             }
 
-            Seed = Properties.Settings.Default.Seed;
-            cells = new bool[cellsX, cellsY];
         }
 
         #region Drawing Universe, Rules, Neighbor count and show method, Cells Alive, Generation Count, timer
@@ -429,26 +417,20 @@ namespace ConwaysGOL
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Reset();
-            DrawPanel.BackColor = Properties.Settings.Default.BackColor;
-            PenColor = Properties.Settings.Default.GridColor;
-            BrushColor = Properties.Settings.Default.CellColor;
-            showGrid = Properties.Settings.Default.ShowGrid;
-            showNeighbor = Properties.Settings.Default.ShowNeighbor;
-            cellsX = Properties.Settings.Default.CellX;
-            cellsY = Properties.Settings.Default.CellY;
-            neighborCountToolStripMenuItem.Checked = showNeighbor;
-            gridToolStripMenuItem.Checked = showGrid;
-            isToroidal = Properties.Settings.Default.IsToroidal;
-            timer.Interval = Properties.Settings.Default.Interval;
-            Seed = Properties.Settings.Default.Seed;
-            cells = new bool[cellsX, cellsY];
+            LoadOrUpdateProperties();
             DrawPanel.Invalidate();
         }
         
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Reload();
+            LoadOrUpdateProperties();
+            DrawPanel.Invalidate();
+        }
+        #endregion
 
+        private void LoadOrUpdateProperties()
+        {
             DrawPanel.BackColor = Properties.Settings.Default.BackColor;
             PenColor = Properties.Settings.Default.GridColor;
             BrushColor = Properties.Settings.Default.CellColor;
@@ -462,9 +444,7 @@ namespace ConwaysGOL
             timer.Interval = Properties.Settings.Default.Interval;
             cells = new bool[cellsX, cellsY];
             Seed = Properties.Settings.Default.Seed;
-            DrawPanel.Invalidate();
         }
-        #endregion
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
