@@ -4,13 +4,11 @@ using System.Windows.Forms;
 
 namespace ConwaysGOL
 {
-    //Todo: Implement Randomize by seed
-    //Todo: implement all settings menu tasks, task dialog, color dialog
-    //Todo: Implement a way to open a file, openfile dialog, or file dialog
-    //Todo: Implement a way to save current config for cells and settings, savefiledialog
-
+    //Todo: implement Open and save Functionality
+    //Todo: maybe implement a party mode button, idea- set background to black, make a glider in the center, play and have the color change from the cells every 2-5 iterations
     public partial class Form1 : Form
     {
+        //member variables
         private bool[,] cells;
         private int cellsX, cellsY;
         private int Generations = 0;
@@ -22,7 +20,8 @@ namespace ConwaysGOL
         {
             InitializeComponent();
             LoadOrUpdateProperties();
-
+            
+            //if the previous setting the user had selected was toroidal then then menu for toroidal will be one else check the finite box
             if (isToroidal)
             {
                 toroidalToolStripMenuItem.Checked = true;
@@ -37,30 +36,36 @@ namespace ConwaysGOL
         #region Drawing Universe, Rules, Neighbor count and show method, Cells Alive, Generation Count, timer
         private void DrawUniverse(object sender, PaintEventArgs e)
         {
-            float cellWidth = (float)DrawPanel.ClientSize.Width / cellsX;
+            //Gets the width of the DrawPanel, the window that does not have the controls, and divides it by the size. It is a float because it draws to the whole panel and avoid white space.
+            float cellWidth = (float)DrawPanel.ClientSize.Width / cellsX; // example: Panel 100, Cells 10 = 10
             float cellHeight = (float)DrawPanel.ClientSize.Height / cellsY;
 
             Pen pen = new Pen(PenColor);
             Brush brush = new SolidBrush(BrushColor);
+
+            // iterating through the array
             for (int y = 0; y < cellsY; y++)
             {
                 for (int x = 0; x < cellsX; x++)
                 {
+                    //make a rect then determine where the start of the x and y will be by multplying the cellWidth and the iterator
                     RectangleF cellRect = RectangleF.Empty;
-                    cellRect.X = cellWidth * x;
+                    cellRect.X = cellWidth * x; // example width 10 * 0 = 0
                     cellRect.Y = cellHeight * y;
                     cellRect.Width = cellWidth;
                     cellRect.Height = cellHeight;
 
+                    //if cell is alive it will fill the rect with the brush color
                     if (cells[x, y])
                     {
                         e.Graphics.FillRectangle(brush, cellRect);
                     }
 
+                    //if grid wants to be seen then the grid will be drawn if not it won't draw anything
                     if (showGrid)
                     { 
                         e.Graphics.DrawRectangle(pen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
-                    }    
+                    }
                     ShowNeighbors(e, x, y, cellRect);
                 }
             }
@@ -71,6 +76,7 @@ namespace ConwaysGOL
             cellsAlive();
         }
 
+        //implementing the rule for Conways game of life
         private void RuleForCell()
         {
             bool[,] scratchPad = new bool[cellsX, cellsY];
@@ -81,36 +87,24 @@ namespace ConwaysGOL
             {
                 for (int x = 0; x < cellsX; x++)
                 {
-                    if (finiteToolStripMenuItem.Checked)
-                    {
-                        neighbors = NeighborsCountFinite(x, y);
-                    }
-
-                    else if (toroidalToolStripMenuItem.Checked)
-                    {
-                        neighbors = NeighborsCountToroidal(x, y);
-                    }
+                    //checks to which boundary type is on and does the corresponding neighbor method
+                    if (finiteToolStripMenuItem.Checked) neighbors = NeighborsCountFinite(x, y);
+                    else if (toroidalToolStripMenuItem.Checked) neighbors = NeighborsCountToroidal(x, y);
                     
+                    //is cell alive or dead
                     if (cells[x, y])
                     {
-                        if (neighbors < 2 || neighbors > 3)
-                        {
-                            scratchPad[x, y] = false;
-                        }
-                        else
-                        {
-                            scratchPad[x, y] = true;
-                        }
+                        // if neighbor is cell than two or more than three the cell will die, else the neighbor is 2 or 3 so the cell stays alive
+                        if (neighbors < 2 || neighbors > 3) scratchPad[x, y] = false;
+                        else scratchPad[x, y] = true;
                     }
                     else if (!cells[x, y])
                     {
-                        if(neighbors == 3)
-                        {
-                            scratchPad[x, y] = true;
-                        }
+                        if(neighbors == 3) scratchPad[x, y] = true;
                     }
                 }
             }
+            // assigning what the scratch pad has to the other array
             cells = scratchPad;
         }
 
@@ -122,13 +116,14 @@ namespace ConwaysGOL
             {
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
+                    // get the current index of the cell and adds an offset to find the neighbors index. EX. cell[2,2], 2+1 = 3, 2+(-1) = 1, the top right neighbor index is [3,1]
                     int neighborsX = row + xOffset;
                     int neighborsY = col + yOffset;
 
-                    if (xOffset == 0 && yOffset == 0) continue;
-                    else if (neighborsX < 0 || neighborsX >= cellsX) continue;
-                    else if (neighborsY < 0 || neighborsY >= cellsY) continue;
-                    else if (cells[neighborsX, neighborsY]) neighbors++;
+                    if (xOffset == 0 && yOffset == 0) continue; // if offset is zero on both axis then we are on ourselves continue
+                    else if (neighborsX < 0 || neighborsX >= cellsX) continue; //x is less than zero or same index or greater as the size of the array it is out of bounds continue,
+                    else if (neighborsY < 0 || neighborsY >= cellsY) continue; //same as above but for y
+                    else if (cells[neighborsX, neighborsY]) neighbors++; // if cell is alive increase the neighbor count
                 }
             }
             return neighbors;
@@ -141,18 +136,19 @@ namespace ConwaysGOL
             {
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
+                    // same as finite method
                     int neighborsX = row + xOffset;
                     int neighborsY = col + yOffset;
 
-                    if (xOffset == 0 && yOffset == 0) continue;
-                    if(neighborsX < 0) neighborsX = cellsX - 1;
-                    if(neighborsX >= cellsX) neighborsX = 0;
+                    if (xOffset == 0 && yOffset == 0) continue; // same as finite method
+                    if(neighborsX < 0) neighborsX = cellsX - 1; //neighbor index less than zero we want it to be the last index of the x so it loops around
+                    if(neighborsX >= cellsX) neighborsX = 0; // neighbor index greater than the index of the x then it will be zero
                     
-                    if(neighborsY < 0) neighborsY = cellsY -1 ;
-                    
+                    //same as above but for y index
+                    if(neighborsY < 0) neighborsY = cellsY -1;
                     if(neighborsY >= cellsY) neighborsY = 0;
-                   
-                    if (cells[neighborsX, neighborsY]) neighbors++;
+
+                    if (cells[neighborsX, neighborsY]) neighbors++; // if cell is alive then increment neighbors
                 }
             }
             return neighbors;
@@ -160,12 +156,14 @@ namespace ConwaysGOL
         
         private void ShowNeighbors(PaintEventArgs e, int row, int col, RectangleF cellRect)
         {
+            // return if neighbors don't want to be shown
             if (!showNeighbor)
             {
                 return;
             }
 
             int neighborCount = 0;
+            //which boundary is checked, do the correct neighbor check and uncheck the other menu item
             if (finiteToolStripMenuItem.Checked)
             {
                 toroidalToolStripMenuItem.Checked = false;
@@ -181,10 +179,12 @@ namespace ConwaysGOL
             Brush brush;
             Font font = new Font("Arial", 12.0f);
             StringFormat format = new StringFormat();
-
+            
+            // aligns everything to the center
             format.Alignment = StringAlignment.Center;
             format.LineAlignment = StringAlignment.Center;
 
+            // only want to show a number if the neigbor count is more than zero
             if (neighborCount > 0)
             {
                     brush = new SolidBrush(Color.Green);
@@ -195,15 +195,24 @@ namespace ConwaysGOL
         
         private void ChangeStateOnPanelClick(object sender, MouseEventArgs e)
         {
+            // if button is the left mouse button the check this
             if (e.Button == MouseButtons.Left)
             {
                 float cellWidth = (float)DrawPanel.ClientSize.Width / cellsX;
                 float cellHeight = (float)DrawPanel.ClientSize.Height / cellsY;
                 int row = (int)(e.X / cellWidth);
                 int col = (int)(e.Y / cellHeight);
+                //when clicked it will do the opposite of current state
                 cells[row, col] = !cells[row, col];
                 DrawPanel.Invalidate();
             }
+        }
+        
+        private void ShowGen()
+        {
+            // changes the label to the current gen
+            GenerationStripStatusLabel.Text = "Generations = " + Generations.ToString();
+            statusStrip1.Refresh();
         }
         
         private void NextGen()
@@ -213,12 +222,6 @@ namespace ConwaysGOL
             ShowGen();
         }
         
-        private void ShowGen()
-        {
-            GenerationStripStatusLabel.Text = "Generations = " + Generations.ToString();
-            statusStrip1.Refresh();
-        }
-        
         private void cellsAlive()
         {
             int cellsAlive = 0;
@@ -226,9 +229,11 @@ namespace ConwaysGOL
             {
                 for (int x = 0; x < cellsX; x++)
                 {
+                    //increment the amount if the cell is alive
                     if (cells[x, y]) cellsAlive++;
                 }
             }
+            // changes the label to the current number of live cells
             cellsAliveStripStatusLabel.Text = "Cells Alive = " + cellsAlive.ToString();
             statusStrip1.Refresh();
         }
@@ -243,6 +248,7 @@ namespace ConwaysGOL
         #region New, Exit for both file menu and tool strip
         private void NewStripButton_Click(object sender, System.EventArgs e)
         {
+            //When the new button or the menu item is clicked make a new array of the current size, generation is reset and update the panel to show the changes
             cells = new bool[cellsX, cellsY];
             Generations = 0;
             DrawPanel.Invalidate();
@@ -257,6 +263,7 @@ namespace ConwaysGOL
         #region View menu items
         private void neighborCountToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // was button turned on if it was they want to see neighbors if it was turned off they don't want to see neighbors update
             if (neighborCountToolStripMenuItem.Checked) showNeighbor = true;
             else showNeighbor = false;
             DrawPanel.Invalidate();
@@ -264,6 +271,7 @@ namespace ConwaysGOL
 
         private void gridToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // was the button turned on if is they want to see the grid, if turned off they don't update
             if (gridToolStripMenuItem.Checked) showGrid = true;
             else showGrid = false;
             DrawPanel.Invalidate();
@@ -271,6 +279,7 @@ namespace ConwaysGOL
 
         private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //if toroidal button was clicked they want that boundary, uncheck the finite and update
             isToroidal = true;
             finiteToolStripMenuItem.Checked = false;
             DrawPanel.Invalidate();
@@ -278,6 +287,7 @@ namespace ConwaysGOL
 
         private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //same as toroidal method but reversed for the finite
             isToroidal = false;
             toroidalToolStripMenuItem.Checked = false;
             DrawPanel.Invalidate();
@@ -287,6 +297,7 @@ namespace ConwaysGOL
         #region Run Menu items plus the tool strip
         private void PlayButton_Click(object sender, EventArgs e)
         {
+            // when button/menu is pressed pause will now be enabled and play and next will be disabled, start the timer to increase the generation count
             PauseStripButton.Enabled = true;
             NextStripButton.Enabled = false;
             PlayStripButton.Enabled = false;
@@ -295,6 +306,7 @@ namespace ConwaysGOL
         
         private void NextStripButton_Click(object sender, EventArgs e)
         {
+            // when button/menu item is clicked do the rules for the game increase the count, update the screen and then show the new generation count
             RuleForCell();
             Generations++;
             DrawPanel.Invalidate();
@@ -303,6 +315,7 @@ namespace ConwaysGOL
         
         private void PauseButton_Click(object sender, EventArgs e)
         {
+            // when clicked it will stop the timer, disable the pause button and enable the play and next button
             timer.Enabled = false;
             PauseStripButton.Enabled = false;
             NextStripButton.Enabled = true;
@@ -314,18 +327,24 @@ namespace ConwaysGOL
         #region Randomize Menu items
         private void fromSeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // make new array by clearing the old one
             cells = new bool[cellsX, cellsY];
             Random rand;
+            // make custom dialog box
             RandomBySeed dialog = new RandomBySeed();
+            // set the custom dialog box seed to current seed
             dialog.Seed = Seed;
+            //was ok pressed
             if (DialogResult.OK == dialog.ShowDialog())
             {
+                // rand will now be the seed that the user put into the box
                 rand = new Random(dialog.Seed);
                 Seed = dialog.Seed;
                 for (int y = 0; y < cellsY; y++)
                 {
                     for (int x = 0; x < cellsX; x++)
                     {
+                        // gets the next number from 0-1, if it is cell that cell will now be alive
                         if(rand.Next(0, 2) == 1) cells[x, y] = true;
                     }
                 }
@@ -335,12 +354,15 @@ namespace ConwaysGOL
 
         private void RandomizeByTime(object sender, EventArgs e)
         {
+            //make new array by clearing the old one
             cells = new bool[cellsX, cellsY];
+            //default constructor use time dependent seed value
             Random rand = new Random();
             for (int y = 0; y < cellsY; y++)
             {
                 for (int x = 0; x < cellsX; x++)
                 {
+                    // gets the next number from 0-1 if it is 1 the cell is now alive
                     if (rand.Next(0, 2) == 1) cells[x, y] = true;
                 }
             }
@@ -352,19 +374,21 @@ namespace ConwaysGOL
         #region Settings Menu items
         private void backColorToolStripMenuItem_Click(object sender, EventArgs e)
          {
+            // make custom dialog box then set the color selector to the current color if known
             ColorDialog color = new ColorDialog();
             color.Color = DrawPanel.BackColor;
-            if (DialogResult.OK == color.ShowDialog())
-            {
-                DrawPanel.BackColor = color.Color;
-            }
+
+            // if ok was pressed the backgroud color will now change
+            if (DialogResult.OK == color.ShowDialog()) DrawPanel.BackColor = color.Color;      
          }
 
         private void cellColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // make custom dialog box, then set the color selector to the current color if known
             ColorDialog color = new ColorDialog();
             color.Color = BrushColor;
 
+            // if ok was pressed the color will now be what they selected, update to show the change in cells
             if(DialogResult.OK == color.ShowDialog())
             {
                 BrushColor = color.Color;
@@ -374,9 +398,11 @@ namespace ConwaysGOL
 
         private void gridLinesColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // custom dialog box and then set the color selector to the current color if known            
             ColorDialog color = new ColorDialog();
             color.Color = PenColor;
 
+            // if ok was pressed then the new color will be what the user selected, update to show the grid lines with the new pen color
             if(DialogResult.OK == color.ShowDialog())
             {
                 PenColor = color.Color;
@@ -386,22 +412,28 @@ namespace ConwaysGOL
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // makes custom dialog box sets the value inside to member variables
             OptionDialog options = new OptionDialog();
             options.TimeInterval = timer.Interval;
             options.CellWidth = cellsX;
             options.CellHeight = cellsY;
+            
+            // if ok was pressed do some more checks
             if (DialogResult.OK == options.ShowDialog())
             {
+                //if the timer didn't change then make a new board with the cell size that was requested
                 if(options.TimeInterval == timer.Interval)
                 {
                     cellsX = options.CellWidth;
                     cellsY = options.CellHeight;
                     cells = new bool[cellsX, cellsY];
                 }
-                else if(options.TimeInterval != timer.Interval && options.CellWidth == cellsX && options.CellHeight == cellsY)
+                // if the timer is not the same but the cell sizes stayed the same then just update the timer no need to clear the board
+                else if(options.TimeInterval != timer.Interval && options.CellWidth == cellsX && options.CellHeight == cellsY) 
                 {
                     timer.Interval = options.TimeInterval;
                 }
+                // if anything else such as timer and cellx change it will make the board and update the timer
                 else
                 {
                     timer.Interval = options.TimeInterval;
@@ -416,6 +448,7 @@ namespace ConwaysGOL
 
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // will set everything back to the default settings and update
             Properties.Settings.Default.Reset();
             LoadOrUpdateProperties();
             DrawPanel.Invalidate();
@@ -423,6 +456,7 @@ namespace ConwaysGOL
         
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // will set everything back to the last user save data
             Properties.Settings.Default.Reload();
             LoadOrUpdateProperties();
             DrawPanel.Invalidate();
@@ -431,6 +465,7 @@ namespace ConwaysGOL
 
         private void LoadOrUpdateProperties()
         {
+            // everything here will set the member variables to what was last saved by system or default value I set
             DrawPanel.BackColor = Properties.Settings.Default.BackColor;
             PenColor = Properties.Settings.Default.GridColor;
             BrushColor = Properties.Settings.Default.CellColor;
@@ -448,6 +483,7 @@ namespace ConwaysGOL
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            // Everything here will update/save the users current settings 
             Properties.Settings.Default.BackColor = DrawPanel.BackColor;
             Properties.Settings.Default.GridColor = PenColor;
             Properties.Settings.Default.CellColor = BrushColor;
