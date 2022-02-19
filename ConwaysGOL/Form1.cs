@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace ConwaysGOL
@@ -245,7 +246,7 @@ namespace ConwaysGOL
         }
         #endregion
 
-        #region New, Exit for both file menu and tool strip
+        #region New, Save, Open, Exit for both file menu and tool strip
         private void NewStripButton_Click(object sender, System.EventArgs e)
         {
             //When the new button or the menu item is clicked make a new array of the current size, generation is reset and update the panel to show the changes
@@ -253,6 +254,34 @@ namespace ConwaysGOL
             Generations = 0;
             DrawPanel.Invalidate();
         }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Cells|*.cells";
+            saveDialog.DefaultExt = "cells";
+
+            if (DialogResult.OK == saveDialog.ShowDialog())
+            {
+                StreamWriter sw = new StreamWriter(saveDialog.FileName);
+                sw.WriteLine($"!{cellsX}");
+                sw.WriteLine($"!{cellsY}");
+                for (int y = 0; y < cellsY; y++)
+                {
+                    String writeRow = String.Empty;
+                    for (int x = 0; x < cellsX; x++)
+                    {
+                        if (cells[x, y]) writeRow += 'O';
+                        else writeRow += '.';
+
+                    }
+                    sw.WriteLine(writeRow);
+                    writeRow = String.Empty;
+                }
+                sw.Close();
+            }
+        }
+
 
         private void exitToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
