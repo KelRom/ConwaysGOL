@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 namespace ConwaysGOL
 {
-    //Todo: implement Open and save Functionality
     //Todo: maybe implement a party mode button, idea- set background to black, make a glider in the center, play and have the color change from the cells every 2-5 iterations
     public partial class Form1 : Form
     {
