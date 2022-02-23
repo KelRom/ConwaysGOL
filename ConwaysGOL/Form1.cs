@@ -246,13 +246,45 @@ namespace ConwaysGOL
         }
         #endregion
 
-        #region New, Save, Open, Exit for both file menu and tool strip
+        #region New, Open, Save, Exit for both file menu and tool strip
         private void NewStripButton_Click(object sender, System.EventArgs e)
         {
             //When the new button or the menu item is clicked make a new array of the current size, generation is reset and update the panel to show the changes
             cells = new bool[cellsX, cellsY];
             Generations = 0;
             DrawPanel.Invalidate();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Cells|*.cells";
+            openFileDialog.DefaultExt = "cells";
+            if (DialogResult.OK == openFileDialog.ShowDialog())
+            {
+                StreamReader sr = new StreamReader(openFileDialog.FileName);
+                string sizeX = sr.ReadLine();
+                string sizeY = sr.ReadLine();
+
+                int width = 0;
+                int height = 0;
+
+                if (int.TryParse(sizeX.Trim('!'), out width)) cellsX = width;
+                if (int.TryParse(sizeY.Trim('!'), out height)) cellsY = height;
+
+                cells = new bool[cellsX, cellsY];
+                for (int y = 0; y < height; y++)
+                {
+                    String row = sr.ReadLine();
+                    for (int x = 0; x < width; x++)
+                    {
+                        if (row[x] == 'O') cells[x, y] = true;
+                        else if (row[x] == '.') cells[x, y] = false;
+                    }
+                }
+                DrawPanel.Invalidate();
+                sr.Close();
+            }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -281,7 +313,6 @@ namespace ConwaysGOL
                 sw.Close();
             }
         }
-
 
         private void exitToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
