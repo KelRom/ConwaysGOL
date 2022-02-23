@@ -387,7 +387,6 @@ namespace ConwaysGOL
         private void fromSeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // make new array by clearing the old one
-            cells = new bool[cellsX, cellsY];
             Random rand;
             // make custom dialog box
             RandomBySeed dialog = new RandomBySeed();
@@ -396,6 +395,7 @@ namespace ConwaysGOL
             //was ok pressed
             if (DialogResult.OK == dialog.ShowDialog())
             {
+                cells = new bool[cellsX, cellsY];
                 // rand will now be the seed that the user put into the box
                 rand = new Random(dialog.Seed);
                 Seed = dialog.Seed;
