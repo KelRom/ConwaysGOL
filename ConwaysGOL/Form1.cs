@@ -78,10 +78,11 @@ namespace ConwaysGOL
             brush.Dispose();
             pen.Dispose();
 
-            ShowHUD(e);
+            
             ShowGen();
             cellsAlive();
             ShowLiveCells();
+            ShowHUD(e);
         }
 
         //implementing the rule for Conways game of life
@@ -344,6 +345,7 @@ namespace ConwaysGOL
 
         private void ShowHUD(PaintEventArgs e)
         {
+
             if (showHUD)
             {
                 Font font = new Font("Times New Roman", 12.0f);
