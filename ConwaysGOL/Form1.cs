@@ -12,25 +12,31 @@ namespace ConwaysGOL
         private bool[,] cells;
         private int cellsX, cellsY;
         private int Generations = 0;
+        private int CellsAlive = 0;
         private int Seed;
-        private bool showNeighbor, showGrid, isToroidal;
+        private string BoundaryType = String.Empty;
+        private bool showNeighbor, showGrid, isToroidal, showHUD;
         private Color PenColor, BrushColor;
 
         public Form1()
         {
             InitializeComponent();
             LoadOrUpdateProperties();
-            
+
             //if the previous setting the user had selected was toroidal then then menu for toroidal will be one else check the finite box
             if (isToroidal)
             {
                 toroidalToolStripMenuItem.Checked = true;
+                BoundaryType = "Toroidal";
             }
             else
             {
                 finiteToolStripMenuItem.Checked = true;
+                BoundaryType = "Finite";
             }
-
+            
+            if (showHUD == true) hUDToolStripMenuItem.Checked = true;
+            else hUDToolStripMenuItem.Checked = false;
         }
 
         #region Drawing Universe, Rules, Neighbor count and show method, Cells Alive, Generation Count, timer
@@ -63,7 +69,7 @@ namespace ConwaysGOL
 
                     //if grid wants to be seen then the grid will be drawn if not it won't draw anything
                     if (showGrid)
-                    { 
+                    {
                         e.Graphics.DrawRectangle(pen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
                     }
                     ShowNeighbors(e, x, y, cellRect);
@@ -72,8 +78,10 @@ namespace ConwaysGOL
             brush.Dispose();
             pen.Dispose();
 
+            ShowHUD(e);
             ShowGen();
             cellsAlive();
+            ShowLiveCells();
         }
 
         //implementing the rule for Conways game of life
@@ -204,6 +212,8 @@ namespace ConwaysGOL
                 int col = (int)(e.Y / cellHeight);
                 //when clicked it will do the opposite of current state
                 cells[row, col] = !cells[row, col];
+                if (cells[row, col]) CellsAlive++;
+                else CellsAlive--;
                 DrawPanel.Invalidate();
             }
         }
@@ -215,6 +225,13 @@ namespace ConwaysGOL
             statusStrip1.Refresh();
         }
         
+        private void ShowLiveCells()
+        {
+            // changes the label to the current number of live cells
+            cellsAliveStripStatusLabel.Text = "Cells Alive = " + CellsAlive.ToString();
+            statusStrip1.Refresh();
+        }
+
         private void NextGen()
         {
             RuleForCell();
@@ -224,18 +241,16 @@ namespace ConwaysGOL
         
         private void cellsAlive()
         {
-            int cellsAlive = 0;
+            int liveCells = 0;
             for (int y = 0; y < cellsY; y++)
             {
                 for (int x = 0; x < cellsX; x++)
                 {
-                    //increment the amount if the cell is alive
-                    if (cells[x, y]) cellsAlive++;
+                    if (cells[x, y]) liveCells++;
                 }
             }
-            // changes the label to the current number of live cells
-            cellsAliveStripStatusLabel.Text = "Cells Alive = " + cellsAlive.ToString();
-            statusStrip1.Refresh();
+            CellsAlive = liveCells;
+           
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -251,6 +266,7 @@ namespace ConwaysGOL
             //When the new button or the menu item is clicked make a new array of the current size, generation is reset and update the panel to show the changes
             cells = new bool[cellsX, cellsY];
             Generations = 0;
+            CellsAlive = 0;
             DrawPanel.Invalidate();
         }
 
@@ -320,6 +336,29 @@ namespace ConwaysGOL
         #endregion
 
         #region View menu items
+        private void hUDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showHUD = !showHUD;
+            DrawPanel.Invalidate();
+        }
+
+        private void ShowHUD(PaintEventArgs e)
+        {
+            if (showHUD)
+            {
+                Font font = new Font("Times New Roman", 12.0f);
+                StringFormat format = new StringFormat();
+
+                // aligns everything to the center
+                format.Alignment = StringAlignment.Near;
+                format.LineAlignment = StringAlignment.Center;
+                Rectangle rect = new Rectangle(10, ClientSize.Height - 175, 300, 100);
+                e.Graphics.DrawString($"Current Generation: {Generations.ToString()} " +
+                    $"\nCells Alive: {CellsAlive.ToString()} \nUniverse Size (x,y): {cellsX.ToString()}, {cellsY}" +
+                    $"\nBoundary Type: {BoundaryType}", font, Brushes.Black, rect, format);
+            }
+        }
+
         private void neighborCountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // was button turned on if it was they want to see neighbors if it was turned off they don't want to see neighbors update
@@ -331,8 +370,7 @@ namespace ConwaysGOL
         private void gridToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // was the button turned on if is they want to see the grid, if turned off they don't update
-            if (gridToolStripMenuItem.Checked) showGrid = true;
-            else showGrid = false;
+            showGrid = !showGrid;
             DrawPanel.Invalidate();
         }
 
@@ -340,7 +378,9 @@ namespace ConwaysGOL
         {
             //if toroidal button was clicked they want that boundary, uncheck the finite and update
             isToroidal = true;
+            BoundaryType = "Toroidal";
             finiteToolStripMenuItem.Checked = false;
+            toroidalToolStripMenuItem.Checked = true;
             DrawPanel.Invalidate();
         }
 
@@ -348,7 +388,9 @@ namespace ConwaysGOL
         {
             //same as toroidal method but reversed for the finite
             isToroidal = false;
+            BoundaryType = "Finite";
             toroidalToolStripMenuItem.Checked = false;
+            finiteToolStripMenuItem.Checked = true;
             DrawPanel.Invalidate();
         }
         #endregion
@@ -404,10 +446,11 @@ namespace ConwaysGOL
                     for (int x = 0; x < cellsX; x++)
                     {
                         // gets the next number from 0-1, if it is cell that cell will now be alive
-                        if(rand.Next(0, 2) == 1) cells[x, y] = true;
+                        if (rand.Next(0, 2) == 1) cells[x, y] = true;
                     }
                 }
             }
+            cellsAlive();
             DrawPanel.Invalidate();
         }
 
@@ -425,6 +468,7 @@ namespace ConwaysGOL
                     if (rand.Next(0, 2) == 1) cells[x, y] = true;
                 }
             }
+            cellsAlive();
             DrawPanel.Invalidate();
         }
 
@@ -531,6 +575,7 @@ namespace ConwaysGOL
             showGrid = Properties.Settings.Default.ShowGrid;
             showNeighbor = Properties.Settings.Default.ShowNeighbor;
             isToroidal = Properties.Settings.Default.IsToroidal;
+            showHUD = Properties.Settings.Default.ShowHUD;
             cellsX = Properties.Settings.Default.CellX;
             cellsY = Properties.Settings.Default.CellY;
             neighborCountToolStripMenuItem.Checked = showNeighbor;
@@ -548,6 +593,7 @@ namespace ConwaysGOL
             Properties.Settings.Default.CellColor = BrushColor;
             Properties.Settings.Default.ShowGrid = showGrid;
             Properties.Settings.Default.ShowNeighbor = showNeighbor;
+            Properties.Settings.Default.ShowHUD = showHUD;
             Properties.Settings.Default.IsToroidal = isToroidal;
             Properties.Settings.Default.CellX = cellsX;
             Properties.Settings.Default.CellY = cellsY;
