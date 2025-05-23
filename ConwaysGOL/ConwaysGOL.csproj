@@ -102,7 +102,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.md" />
     <None Include="Resources\StartButtonIMG.png" />
   </ItemGroup>
   <ItemGroup>
