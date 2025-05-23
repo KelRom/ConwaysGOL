@@ -1,14 +1,14 @@
 ﻿# Conway's Game of Life
 ---
 
-## 1. **Summary**
+## **Summary**
 Conway’s Game of Life is a type of computer simulation known as a cellular automaton (automaton is the singular form, automata the plural.) Cellular automata are essentially mathematical models of complex systems important to many fields of study including mathematics, biology, chemistry and physics.
 The “game” was originally devised by British mathematician John Horton Conway in 1970. Conway was building upon work done in the 1940s by Hungarian-American mathematician John Von Neumann. Von Neumann was attempting to modal a type of machine that could make copies of its self (or self-replicate) and he eventually found such a machine could be represented by a 2 dimensional array of cells.
 
 This was a project that was completed as a University assignment as part of my Project and Portfolio class.
 Worked in the .NET framework using C# in order to reproduce a replica of Conway's Game of Life. I used version control using git, classes, and the windows form application.
 
-## 2. **Tasks Completed**
+## **Tasks Completed**
 - Rendered a grid representing the individual cells.
 - Turn on/off cells with a click of the mouse
 - Implemented game rules
